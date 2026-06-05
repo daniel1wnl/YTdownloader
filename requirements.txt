@@ -1,2 +1,3 @@
-customtkinter
+streamlit
 yt-dlp
+ffmpeg-python

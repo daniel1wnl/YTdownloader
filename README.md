@@ -1,71 +1,78 @@
-# YTdownloader: Desktop YouTube Downloader
+# YTdownloader: Web-Based YouTube Downloader
 
-A modern, cross-platform desktop application designed for seamless downloading of YouTube content. Built with **Python** and featuring a sleek **CustomTkinter** GUI, this tool allows users to easily save their favorite videos as high-quality `.mp3` or `.mp4` files.
+A modern, cross-platform web application designed for seamless downloading of YouTube content. Built with **Python** and **Streamlit**, this tool allows users to easily save their favorite videos as high-quality `.mp3`, `.mp4`, or `.mkv` files via a clean web interface.
 
 ## 🚀 Key Features
 
-- **Intuitive GUI**: A clean, user-friendly interface built with `customtkinter` for a modern look and feel.
+- **Web-Based Interface**: A responsive UI built with `Streamlit`, accessible from any device on your network.
 - **High-Quality Extraction**: 
-  - **Audio (MP3)**: Extracts audio at 192kbps for crystal-clear sound.
-  - **Video (MP4)**: Merges best video and audio streams for the highest available resolution.
-- **Background Orchestration**: Leverages the power of `yt-dlp` and `FFmpeg` for robust and reliable processing.
-- **Cross-Platform Support**: Includes specialized instructions and builds for both **Windows** and **macOS**.
-- **Automated Organization**: Automatically categorizes downloads into dedicated `YTD_Audios` and `YTD_videos` directories.
+  - **Audio (MP3)**: Extracts high-quality audio at 192kbps.
+  - **Standard Video (MP4)**: Best for universal compatibility.
+  - **Best Quality Video (MKV)**: Ideal for media servers (Plex, Jellyfin, Navidrome).
+- **Decoupled Core**: Powerful download logic powered by `yt-dlp` and `FFmpeg`.
+- **Docker Ready**: "Just works" deployment with all dependencies (including FFmpeg) pre-configured.
 
 ## 🛠️ Tech Stack
 
-- **Language**: Python 3
-- **GUI Framework**: [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)
+- **Language**: Python 3.9+
+- **Web Framework**: [Streamlit](https://streamlit.io/)
 - **Processing Engine**: [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 - **Multimedia Framework**: [FFmpeg](https://ffmpeg.org/)
-- **Build Tools**: [PyInstaller](https://pyinstaller.org/), [py2app](https://github.com/ronaldoussoren/py2app)
 
 ## 📋 Prerequisites
 
-- Python 3.9+
-- **FFmpeg** must be installed and added to your system's PATH.
+- **Option A (Docker)**: Only [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) installed.
+- **Option B (Local)**: Python 3.9+ and **FFmpeg** installed and added to your system's PATH.
 
-## ⚙️ Installation & Running
+## ⚙️ How to Run
 
+### 🐳 Method 1: Docker (Recommended)
+This is the easiest way. It handles all dependencies for you.
+1. Clone the repository and navigate to the folder.
+2. Run:
+   ```bash
+   docker-compose up --build
+   ```
+3. Open your browser to: `http://localhost:8501`
+
+### 🐍 Method 2: Local Python
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/daniel1wnl/YTdownloader.git
    cd YTdownloader
    ```
-
-2. **Create and activate a virtual environment:**
-   - **Unix/macOS:**
-     ```bash
-     python3 -m venv env
-     source env/bin/activate
-     ```
-   - **Windows:**
-     ```bash
-     py -m venv env
-     .\env\Scripts\activate
-     ```
-
+2. **Setup Virtual Environment:**
+   ```bash
+   python3 -m venv env
+   source env/bin/activate  # Unix/macOS
+   # .\env\Scripts\activate # Windows
+   ```
 3. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
-
 4. **Run the application:**
    ```bash
-   python YTdownloader.py
+   streamlit run app.py
    ```
 
-## 📦 Download Binaries
+## 📖 How to Use
 
-For users who prefer a standalone application without installing Python, check out the [Latest Releases](https://github.com/daniel1wnl/YTdownloader/releases) for `.app` (macOS) and `.exe` (Windows) files.
+1. **Open the Web UI**: Navigate to `http://localhost:8501` in your browser.
+2. **Enter Link**: Paste a YouTube video or playlist URL into the input field.
+3. **Select Format**:
+   - **mp4**: For standard video.
+   - **mp3**: For audio only.
+   - **mkv**: For best quality video/media servers.
+4. **Download**: Click the "Download" button and watch the progress bar.
+5. **Retrieve Files**: All downloads are saved in the `downloads/` folder within the project directory.
 
-## 📸 Previews
+## 📁 Project Structure
 
-### Application Interface (macOS)
-![App UI Preview](imgs/appUI_mac.png)
-
-### Download Success
-![Success Message](imgs/vid_downloaded_mac.png)
+- `app.py`: The Streamlit web interface.
+- `downloader.py`: Core logic for `yt-dlp` processing.
+- `Dockerfile` & `docker-compose.yml`: For containerized deployment.
+- `docs/REFACTORING.md`: Technical details on the architecture.
 
 ## 👤 Author
 
