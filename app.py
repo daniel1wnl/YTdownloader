@@ -86,22 +86,22 @@ st.markdown(f"""
     }}
 
     /* Input & Selectbox Styling */
-    .stTextInput>div>div>input, .stSelectbox>div>div {
+    .stTextInput>div>div>input, .stSelectbox>div>div {{
         border-radius: 2px;
         border: 1px solid {border_color};
         background-color: {bg_color} !important;
         color: {text_color} !important;
-    }
+    }}
 
     /* Fix Placeholder Visibility */
-    ::placeholder {
+    ::placeholder {{
         color: {text_color} !important;
         opacity: 0.5 !important;
-    }
-    input::placeholder {
+    }}
+    input::placeholder {{
         color: {text_color} !important;
         opacity: 0.5 !important;
-    }
+    }}
 
 
     /* Footer Branding */
