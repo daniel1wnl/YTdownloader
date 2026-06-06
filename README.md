@@ -92,6 +92,14 @@ When running `docker-compose up`, you might see some hints in your terminal:
 - `Dockerfile` & `docker-compose.yml`: For containerized deployment.
 - `docs/REFACTORING.md`: Technical details on the architecture.
 
+## 📸 Previews
+
+### Light Mode
+![Light Mode Preview](imgs/Light_Mode.png)
+
+### Dark Mode
+![Dark Mode Preview](imgs/Dark_Mode.png)
+
 ## 👤 Author
 
 **Daniel Gregorio-Torres**
