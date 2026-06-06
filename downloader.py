@@ -20,8 +20,8 @@ class YTDownloader:
         options = {
             'progress_hooks': [self.progress_hook] if self.progress_hook else [],
             'outtmpl': f'{self.download_dir}/%(title)s.%(ext)s',
-            'quiet': True,
-            'no_warnings': True,
+            'quiet': False,  # Changed to False for better debugging
+            'no_warnings': False,
         }
 
         if format_type == 'mp3':
@@ -31,12 +31,18 @@ class YTDownloader:
                     'key': 'FFmpegExtractAudio',
                     'preferredcodec': 'mp3',
                     'preferredquality': '192',
+                }, {
+                    'key': 'FFmpegMetadata',
+                    'add_metadata': True,
                 }],
+                # Help yt-dlp find ffmpeg if it's in a non-standard path
+                'ffmpeg_location': os.getenv('FFMPEG_PATH', None),
             })
         elif format_type == 'mp4':
             # Ensures compatibility by forcing mp4 container
             options.update({
                 'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+                'merge_output_format': 'mp4',
             })
         elif format_type == 'mkv':
             # Best quality available, often results in MKV
