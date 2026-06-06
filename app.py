@@ -9,59 +9,92 @@ st.set_page_config(
     layout="centered"
 )
 
-# Monospace Minimalist CSS
-st.markdown("""
+# Initialize Session State for Theme and Download
+if 'theme' not in st.session_state:
+    st.session_state.theme = 'light'
+if 'download_ready' not in st.session_state:
+    st.session_state.download_ready = False
+if 'file_path' not in st.session_state:
+    st.session_state.file_path = None
+if 'file_name' not in st.session_state:
+    st.session_state.file_name = None
+
+# Theme Colors
+if st.session_state.theme == 'light':
+    bg_color = "#ffffff"
+    text_color = "#333333"
+    border_color = "#cccccc"
+    btn_hover_bg = "#333333"
+    btn_hover_text = "#ffffff"
+    footer_bg = "#ffffff"
+else:
+    bg_color = "#121212"
+    text_color = "#e0e0e0"
+    border_color = "#444444"
+    btn_hover_bg = "#e0e0e0"
+    btn_hover_text = "#121212"
+    footer_bg = "#121212"
+
+# Monospace Minimalist CSS with Dynamic Theme
+st.markdown(f"""
     <style>
     /* Global Monospace Font */
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
     
-    html, body, [class*="css"], .stMarkdown, p, span, div, input, button, select {
+    html, body, [class*="css"], .stApp, .stMarkdown, p, span, div, input, button, select, label {{
         font-family: 'JetBrains Mono', monospace !important;
-    }
+        color: {text_color} !important;
+    }}
+
+    .stApp {{
+        background-color: {bg_color} !important;
+    }}
 
     /* Hide Streamlit branding */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
+    #MainMenu {{visibility: hidden;}}
+    footer {{visibility: hidden;}}
+    header {{visibility: hidden;}}
 
     /* Clean Button Styling */
-    .stButton>button {
+    .stButton>button {{
         width: 100%;
         border-radius: 2px;
-        border: 1px solid #333;
+        border: 1px solid {text_color};
         background-color: transparent;
-        color: #333;
+        color: {text_color};
         height: 3em;
         transition: all 0.2s ease;
-    }
-    .stButton>button:hover {
-        background-color: #333;
-        color: #fff;
-        border: 1px solid #333;
-    }
+    }}
+    .stButton>button:hover {{
+        background-color: {btn_hover_bg} !important;
+        color: {btn_hover_text} !important;
+        border: 1px solid {text_color};
+    }}
 
     /* Green Download Button */
-    .stDownloadButton>button {
+    .stDownloadButton>button {{
         width: 100%;
         border-radius: 2px;
         border: 1px solid #28a745;
         background-color: transparent;
         color: #28a745;
         height: 3em;
-    }
-    .stDownloadButton>button:hover {
-        background-color: #28a745;
-        color: #fff;
-    }
+    }}
+    .stDownloadButton>button:hover {{
+        background-color: #28a745 !important;
+        color: #fff !important;
+    }}
 
-    /* Input Styling */
-    .stTextInput>div>div>input {
+    /* Input & Selectbox Styling */
+    .stTextInput>div>div>input, .stSelectbox>div>div {{
         border-radius: 2px;
-        border: 1px solid #ccc;
-    }
+        border: 1px solid {border_color};
+        background-color: {bg_color} !important;
+        color: {text_color} !important;
+    }}
 
     /* Footer Branding */
-    .footer {
+    .footer {{
         position: fixed;
         left: 0;
         bottom: 0;
@@ -70,22 +103,22 @@ st.markdown("""
         padding: 20px;
         font-size: 12px;
         color: #888;
-        background-color: white;
-    }
+        background-color: {footer_bg};
+    }}
     </style>
     """, unsafe_allow_html=True)
 
-st.title("YTdownloader")
+# Top Bar with Theme Toggle
+t_col1, t_col2 = st.columns([5, 1])
+with t_col1:
+    st.title("YTdownloader")
+with t_col2:
+    if st.button("Mode"):
+        st.session_state.theme = 'dark' if st.session_state.theme == 'light' else 'light'
+        st.rerun()
+
 st.text("Minimalist YouTube Content Extractor")
 st.write("---")
-
-# Initialize Session State
-if 'download_ready' not in st.session_state:
-    st.session_state.download_ready = False
-if 'file_path' not in st.session_state:
-    st.session_state.file_path = None
-if 'file_name' not in st.session_state:
-    st.session_state.file_name = None
 
 def progress_hook(d):
     if d['status'] == 'downloading':
@@ -158,7 +191,7 @@ if st.session_state.download_ready and st.session_state.file_path:
         st.session_state.download_ready = False
 
 # Footer Branding
-st.markdown("""
+st.markdown(f"""
     <div class="footer">
         daniel1wnl / github
     </div>
