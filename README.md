@@ -59,13 +59,19 @@ This is the easiest way. It handles all dependencies for you.
 ## 📖 How to Use
 
 1. **Open the Web UI**: Navigate to `http://localhost:8501` in your browser.
-2. **Enter Link**: Paste a YouTube video or playlist URL into the input field.
+2. **Enter Link**: Paste a YouTube video URL into the input field.
 3. **Select Format**:
-   - **mp4**: For standard video.
-   - **mp3**: For audio only.
-   - **mkv**: For best quality video/media servers.
-4. **Download**: Click the "Download" button and watch the progress bar.
-5. **Retrieve Files**: All downloads are saved in the `downloads/` folder within the project directory.
+   - **mp4**: For standard video compatible with all devices.
+   - **mp3**: For high-quality audio extraction.
+   - **mkv**: For best quality video (best for media servers like Plex/Jellyfin).
+4. **Prepare Download**: Click the **"Prepare Download"** button. The server will fetch the content and process it.
+5. **Save to Computer**: Once the green **"Save to your Computer"** button appears, click it. Your browser will then prompt you to save the file to your preferred location (e.g., your local Downloads folder).
+
+## 🐳 Docker Tips
+
+When running `docker-compose up`, you might see some hints in your terminal:
+- **`w Enable Watch`**: This is for developers; it tells Docker to watch for code changes and restart automatically.
+- **`d Detach`**: Press `d` to run the container in the background, freeing up your terminal window. You can stop it later with `docker-compose stop`.
 
 ## 📁 Project Structure
 
