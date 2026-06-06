@@ -109,17 +109,21 @@ if process_btn:
 
 # If the file is ready on the server, show the button to send it to the browser
 if st.session_state.download_ready and st.session_state.file_path:
-    st.success(f"Ready! **{st.session_state.file_name}** is processed.")
-    
-    with open(st.session_state.file_path, "rb") as f:
-        btn = st.download_button(
-            label="💾 Save to your Computer",
-            data=f,
-            file_name=st.session_state.file_name,
-            mime="application/octet-stream"
-        )
+    if os.path.exists(st.session_state.file_path):
+        st.success(f"Ready! **{st.session_state.file_name}** is processed.")
         
-    st.info("Click the green button above to choose your save location via your browser.")
+        with open(st.session_state.file_path, "rb") as f:
+            btn = st.download_button(
+                label="💾 Save to your Computer",
+                data=f,
+                file_name=st.session_state.file_name,
+                mime="application/octet-stream"
+            )
+            
+        st.info("Click the green button above to choose your save location via your browser.")
+    else:
+        st.error(f"Internal Error: The file was downloaded but we can't find it at `{st.session_state.file_path}`. Please try again.")
+        st.session_state.download_ready = False
 
 st.divider()
 st.caption("Built with Python, Streamlit, and yt-dlp. Downloads are handled by your browser's default settings.")

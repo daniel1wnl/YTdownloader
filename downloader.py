@@ -63,11 +63,21 @@ class YTDownloader:
         try:
             ydl_opts = self.get_options(format_type)
             with YoutubeDL(ydl_opts) as ydl:
+                # We use download=True directly to ensure post-processing finishes
                 info = ydl.extract_info(url, download=True)
+                
+                # IMPORTANT: prepare_filename gives the name BEFORE post-processing (e.g., .webm)
+                # For MP3, we need to manually ensure we're looking for the .mp3 version
+                final_filename = ydl.prepare_filename(info)
+                if format_type == 'mp3':
+                    # Replace the extension with .mp3 as FFmpegExtractAudio will have changed it
+                    base, _ = os.path.splitext(final_filename)
+                    final_filename = f"{base}.mp3"
+                
                 return {
                     "status": "success",
                     "title": info.get('title', 'Unknown Title'),
-                    "file": ydl.prepare_filename(info)
+                    "file": final_filename
                 }
         except Exception as e:
             return {
