@@ -1,5 +1,10 @@
+# Provide the JavaScript runtime required for YouTube challenge solving.
+FROM denoland/deno:bin AS deno
+
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim
+
+COPY --from=deno /deno /usr/local/bin/deno
 
 # Install system dependencies (FFmpeg is required for yt-dlp)
 RUN apt-get update && apt-get install -y \
@@ -13,7 +18,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # Copy the rest of the application code
 COPY . .

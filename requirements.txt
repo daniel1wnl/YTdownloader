@@ -1,3 +1,3 @@
 streamlit
-yt-dlp
+yt-dlp[default]
 ffmpeg-python

@@ -22,6 +22,8 @@ class YTDownloader:
             'outtmpl': f'{self.download_dir}/%(title)s.%(ext)s',
             'quiet': False,  # Changed to False for better debugging
             'no_warnings': False,
+            # Watch links may include a Mix/playlist; the UI returns one file.
+            'noplaylist': True,
         }
 
         if format_type == 'mp3':
